@@ -19,7 +19,14 @@
     <dependency>
       <artifactId>spring-kafka</artifactId>
       <groupId>org.springframework.kafka</groupId>
+      <version>3.3.4</version>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <artifactId>kafka-clients</artifactId>-->
+<!--      <groupId>org.apache.kafka</groupId>-->
+<!--      <version>3.8.1</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <artifactId>jackson-databind</artifactId>

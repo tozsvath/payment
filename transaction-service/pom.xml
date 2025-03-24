@@ -81,6 +81,13 @@
     </dependency>
 
     <dependency>
+      <artifactId>kafka-clients</artifactId>
+      <groupId>org.apache.kafka</groupId>
+      <version>3.4.1</version>
+    </dependency>
+
+
+    <dependency>
       <artifactId>spring-retry</artifactId>
       <groupId>org.springframework.retry</groupId>
     </dependency>
@@ -89,11 +96,6 @@
       <groupId>org.springframework</groupId>
     </dependency>
 
-    <dependency>
-      <artifactId>kafka-clients</artifactId>
-      <groupId>org.apache.kafka</groupId>
-      <version>3.4.1</version>
-    </dependency>
 
   </dependencies>
   <description>Demo project for Spring Boot</description>
@@ -110,7 +112,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>3.4.4</version> <!-- lookup parent from repository -->
+    <version>3.4.4</version>
   </parent>
   <properties>
     <java.version>21</java.version>
