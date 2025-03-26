@@ -26,11 +26,6 @@ public class TransactionController {
   private final TransactionService transactionService;
 
   @PostMapping
-  @Retryable(
-      value = OptimisticLockingFailureException.class,
-      maxAttempts = 3,
-      backoff = @Backoff(delay = 1000)
-  )
   public ResponseEntity<String> createTransaction(
       @Valid @RequestBody TransactionRequest request) {
     log.info("Started processing transaction");

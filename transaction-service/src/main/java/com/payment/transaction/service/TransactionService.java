@@ -18,6 +18,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 
@@ -31,7 +34,12 @@ public class TransactionService {
   private final PaymentEventProducer paymentEventProducer;
   private final Clock clock;
 
-  @Transactional
+  @Retryable(
+      value = OptimisticLockingFailureException.class,
+      maxAttempts = 3,
+      backoff = @Backoff(delay = 1000)
+  )
+  @Transactional(rollbackOn = OptimisticLockingFailureException.class)
   public UUID transfer(TransactionRequest tr) {
     UUID transactionId = UUID.randomUUID();
     log.debug("Processing transaction: {}", transactionId);
@@ -54,7 +62,9 @@ public class TransactionService {
         tr,
         EntryType.CREDIT);
 
+    senderAccount.setVersion(senderAccount.getVersion() + 1);
     accountRepository.save(senderAccount);
+    receiverAccount.setVersion(receiverAccount.getVersion() + 1);
     accountRepository.save(receiverAccount);
     ledgerRepository.save(senderEntry);
     ledgerRepository.save(receiverEntry);
