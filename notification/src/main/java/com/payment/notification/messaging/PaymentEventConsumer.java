@@ -25,7 +25,6 @@ public class PaymentEventConsumer {
   @KafkaListener(topics = "payment-events", groupId = "payment-group")
   public void consume(@Payload String payload, Acknowledgment acknowledgment) {
     try {
-      ObjectMapper objectMapper = new ObjectMapper();
       ReceiverPaymentEvent paymentEvent = objectMapper.readValue(payload,
           ReceiverPaymentEvent.class);
       log.info("Consumed event: {}", paymentEvent);
